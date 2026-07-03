@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 2 - Formulario con un solo campo</title>
+</head>
+<body>
+    <!-- Formulario con un solo campo de correo electrónico y dos botones submit y reset-->
+    <form>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email">
+        <br><br>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Limpiar">
+    </form>
+
+    <script>
+        //Obtener los datos del formulario al enviarlo
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function(event) {
+            
+            //Comprobar el valor del campo de correo que tenga un @
+            var email = document.getElementById("email").value;
+            if (!email.value.includes("@")) {
+                console.log("El correo no es válido");
+            } else {
+                //Enviar el formulario
+                console.log("Correo electrónico enviado: " + email);
+            }
+
+        });
+
+        //Limpiar el formulario al resetearlo
+        form.addEventListener("reset", function() {
+            console.log("Formulario limpiado");
+        });
+
+
+    </script>
+</body>
+</html>

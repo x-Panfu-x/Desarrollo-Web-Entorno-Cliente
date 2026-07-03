@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dibujar en Canvas</title>
+</head>
+<body>
+
+<h2>Dibuja manteniendo pulsado el ratón</h2>
+
+<canvas id="miCanvas" width="600" height="300" 
+        style="border:1px solid black;"></canvas>
+
+<script>
+    const canvas = document.getElementById("miCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let dibujando = false;
+
+    // Cuando se pulsa el ratón
+    canvas.addEventListener("mousedown", (e) => {
+        dibujando = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    // Cuando se mueve el ratón
+    canvas.addEventListener("mousemove", (e) => {
+        if (dibujando) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    });
+
+    // Cuando se suelta el ratón
+    canvas.addEventListener("mouseup", () => {
+        dibujando = false;
+    });
+
+    // Si sale del canvas
+    canvas.addEventListener("mouseleave", () => {
+        dibujando = false;
+    });
+
+</script>
+
+</body>
+</html>

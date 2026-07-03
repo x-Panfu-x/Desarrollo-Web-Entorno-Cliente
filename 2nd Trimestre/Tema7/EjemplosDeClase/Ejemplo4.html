@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 4 - Caja con movimiento</title>
+    <style>
+
+        main {
+            width: 80%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: lightgray;
+        }
+
+        #caja {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(255, 80, 80);
+            position: relative;
+        }
+        
+    </style>
+</head>
+<body>
+    <main>
+        <div id="caja">
+
+        </div>
+    </main>
+
+    <script>
+        let caja = document.getElementById("caja");
+
+        //cada vez que el ususario pulse los cursores flechas arriba, abajo, derecha, izquierda
+        document.addEventListener("keydown", function(pulsarTecla) {
+            let izquierda = caja.offsetLeft;
+            let arriba = caja.offsetTop;
+            let derecha = izquierda + caja.offsetWidth;
+            let abajo = arriba + caja.offsetHeight;
+
+            switch(pulsarTecla.key) {
+                case "ArrowLeft":
+                    caja.style.left = (izquierda - 10) + "px";
+                    break;
+                case "ArrowRight":
+                    caja.style.left = (derecha + 10) + "px";
+                    break;
+                case "ArrowUp":
+                    caja.style.top = (arriba - 10) + "px";
+                    break;
+                case "ArrowDown":
+                    caja.style.top = (abajo + 10) + "px";
+                    break;
+            }
+        });
+
+    </script>
+</body>
+</html>

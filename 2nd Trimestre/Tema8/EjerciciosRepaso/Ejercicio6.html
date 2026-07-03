@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de tareas con Web Storage</title>
+</head>
+
+<body>
+    <h1>Lista de tareas</h1>
+
+    <input id="tareaInput" type="text" placeholder="Escribe una tarea" />
+    <button id="btnAgregar">Agregar</button>
+
+    <ul id="listaTareas"></ul>
+
+    <script>
+        // Claves que usaremos en localStorage
+        const CLAVE_TAREAS = "tareas";
+
+        // Referencias a elementos del DOM
+        const inputTarea = document.getElementById("tareaInput");
+        const btnAgregar = document.getElementById("btnAgregar");
+        const listaTareas = document.getElementById("listaTareas");
+
+        // 1. Cargar tareas guardadas al iniciar
+        function cargarTareas() {
+            // Obtenemos la cadena del localStorage y la convertimos a array
+            const tareasGuardadas = JSON.parse(localStorage.getItem(CLAVE_TAREAS)) || [];
+            tareasGuardadas.forEach(texto => {
+                crearElementoTarea(texto);
+            });
+        }
+
+        // 2. Guardar array de tareas en localStorage
+        function guardarTareas() {
+            const tareas = [];
+            // Recorremos los <li> actuales para reconstruir el array
+            listaTareas.querySelectorAll("li").forEach(li => {
+                tareas.push(li.firstChild.textContent); // el texto está en el primer nodo de texto
+            });
+            localStorage.setItem(CLAVE_TAREAS, JSON.stringify(tareas));
+        }
+
+        // 3. Crear un <li> con la tarea y botón eliminar
+        function crearElementoTarea(texto) {
+            const li = document.createElement("li");
+            li.textContent = texto + " ";
+
+            const btnEliminar = document.createElement("button");
+            btnEliminar.textContent = "Eliminar";
+            btnEliminar.addEventListener("click", () => {
+                listaTareas.removeChild(li);
+                guardarTareas(); // actualizamos localStorage
+            });
+
+            li.appendChild(btnEliminar);
+            listaTareas.appendChild(li);
+        }
+
+        // 4. Manejar el clic en "Agregar"
+        btnAgregar.addEventListener("click", () => {
+            const texto = inputTarea.value.trim();
+            if (texto === "") return;
+
+            crearElementoTarea(texto);
+            guardarTareas();      // guardamos la lista actualizada
+            inputTarea.value = ""; // limpiamos el input
+            inputTarea.focus();
+        });
+
+        // 5. Cargar las tareas al cargar la página
+        cargarTareas();
+
+    </script>
+</body>
+
+</html>
